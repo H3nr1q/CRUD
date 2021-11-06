@@ -28,12 +28,13 @@ namespace CRUD
         public Aluno alunoSelecionado { get; set; }
         public Aluno alunoPreenchido { get; set; }
         public int index { get; set; }
+        public ConexaoPGSQL conexao;
 
         public Escola()
         {
-            Conexao.Con(new ConexaoPGSQL());
+            conexao = new ConexaoPGSQL();
             alunoPreenchido = new Aluno();
-            alunoSelecionado = new Aluno();
+            listaAluno = new ObservableCollection<Aluno>();
             MeusComandos();            
         }
 
@@ -47,7 +48,7 @@ namespace CRUD
                 {
                     try
                     {
-                        Conexao.InserirAluno(alunoPreenchido, listaAluno);
+                        conexao.InserirAluno(alunoPreenchido, listaAluno);
                         limpaCampos();
                         Notifica(); 
 
@@ -69,7 +70,7 @@ namespace CRUD
                     if (alunoSelecionado != null) {
                         try
                         {
-                            Conexao.ExcluirAluno(alunoSelecionado, listaAluno);
+                            conexao.ExcluirAluno(alunoSelecionado, listaAluno);
                             Notifica();
                         }
                         catch (Exception ex)
@@ -94,7 +95,7 @@ namespace CRUD
                        try
                        {
                            //atualizo banco de dados primeiro
-                           //Conexao.AtualizaAluno(alunoSelecionado);
+                           conexao.AtualizaAluno(alunoSelecionado, listaAluno);
                            limpaCampos();
                            Notifica();
                        }
@@ -119,7 +120,7 @@ namespace CRUD
                     { 
                         try
                         {
-                            //Conexao.BuscaAluno(alunoPreenchido);
+                            conexao.BuscaAluno(alunoPreenchido, listaAluno);
                         }
                         catch (Exception ex)
                         {
@@ -131,7 +132,7 @@ namespace CRUD
                     else
                     {
                         //caso não tenha nada no campo para busca, eu simplesmente atualizo minha lista somente pelo que já esta no banco de dados
-                        //Conexao.BuscaTodosAlunos(alunoPreenchido);
+                        conexao.BuscaTodosAlunos(alunoPreenchido, listaAluno);
 
                     }
 

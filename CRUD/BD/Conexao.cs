@@ -9,16 +9,16 @@ namespace CRUD.BD
     public static class Conexao
     {
         private static IConexao conn;
-        public static void Con(IConexao con)
-        {
-            conn = con;
-            conn.Conecta();
-        }
+        //public static void Con(IConexao con)
+        //{
+        //    conn = con;
+        //    conn.Conecta();
+        //}
 
-        public static void Desc(IConexao con)
-        {
-            con.Desonecta();
-        }
+        //public static void Desc()
+        //{
+        //    conn.Desonecta();
+        //}
 
         public static void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
         {
@@ -30,19 +30,19 @@ namespace CRUD.BD
             conn.ExcluirAluno(aluno, lista);
         }
 
-        //public static void AtualizaAluno(Aluno alunoSelecionado)
-        //{
-        //    AtualizaAluno(alunoSelecionado);
-        //}
+        public static void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            conn.AtualizaAluno(aluno, lista);
+        }
 
-        //public static void BuscaAluno(Aluno alunoPreenchido)
-        //{
-        //    BuscaAluno(alunoPreenchido);
-        //}
+        public static void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            conn.BuscaAluno(aluno, lista);
+        }
 
-        //public static void BuscaTodosAlunos(Aluno alunoPreenchido)
-        //{
-        //    BuscaTodosAlunos(alunoPreenchido);
-        //}
+        public static void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            conn.BuscaTodosAlunos(aluno, lista);
+        }
     }
 }

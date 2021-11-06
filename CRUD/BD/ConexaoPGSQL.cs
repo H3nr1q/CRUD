@@ -23,100 +23,163 @@ namespace CRUD.BD.Postgree
 
         public ConexaoPGSQL()
         {
-            comando = new NpgsqlCommand(instrucaoSQL);
+            comando = new NpgsqlCommand();
+            conexao = new NpgsqlConnection(strConexao);
+            comando.Connection = conexao;
             lista = new List<Aluno>();
-            aluno = new Aluno();
+            //aluno = new Aluno();
             codMax = 1;
 
         }
         
 
-        public void Conecta()
-        {
-            conexao = new NpgsqlConnection(strConexao);
-            conexao.Open();
-        }
-
-        public void Desonecta()
-        {
-            conexao.Close();
-        }
 
         public void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
         {
-            instrucaoSQL = "insert into aluno(id, nomeCompleto, telefone, email, serie) values(@id, @nomeCompleto, @telefone, @email, @serie)";
-            comando.Parameters.AddWithValue("@id", codMax);
-            comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
-            comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
-            comando.Parameters.AddWithValue("@email", aluno.Email);
-            comando.Parameters.AddWithValue("@serie", aluno.Serie);
-            comando.ExecuteNonQuery();
-            //depois insiro na lista
-            lista.Add(new Aluno(codMax, aluno.NomeCompleto, aluno.Telefone, aluno.Email, aluno.Serie));
+            try
+            {
+                conexao.Open();
+                comando.CommandText = "insert into aluno(id, nomeCompleto, telefone, email, serie) values(@id, @nomeCompleto, @telefone, @email, @serie)";
+                comando.Parameters.AddWithValue("@id", codMax);
+                comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
+                comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
+                comando.Parameters.AddWithValue("@email", aluno.Email);
+                comando.Parameters.AddWithValue("@serie", aluno.Serie);
+                comando.ExecuteNonQuery();
+                //depois insiro na lista
+                lista.Add(new Aluno(codMax, aluno.NomeCompleto, aluno.Telefone, aluno.Email, aluno.Serie));
+                codMax++;
+
+            }
+            catch
+            {
+                throw;
+            }
+
+            finally
+            {
+                conexao.Close();    
+            }
+            
         }
 
         public void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
         {
-            //Primeiro removo do banco
-            instrucaoSQL = "delete from aluno where id = @id";
-            comando.Parameters.AddWithValue("@id", aluno.Id);
-            comando.ExecuteNonQuery();
-            //removo da lista
-            lista.Remove(aluno);
+
+            try
+            {
+                //Primeiro removo do banco
+                conexao.Open();
+                comando.CommandText = "delete from aluno where id = @id";
+                comando.Parameters.AddWithValue("@id", aluno.Id);
+                comando.ExecuteNonQuery();
+                //removo da lista
+                lista.Remove(aluno);
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+           
         }
 
-        //    public void AtualizaAluno()
-        //    {
-        //        instrucaoSQL = "update aluno set " +
-        //                                       "nomeCompleto = @nomeCompleto, " +
-        //                                       "telefone = @telefone, " +
-        //                                       "email = @email, " +
-        //                                       "serie = @serie " +
-        //                                       "where id = @id";
-        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-        //        comando.Parameters.AddWithValue("@id", alunoSelecionado.Id);
-        //        comando.Parameters.AddWithValue("@nomeCompleto", alunoPreenchido.NomeCompleto);
-        //        comando.Parameters.AddWithValue("@telefone", alunoPreenchido.Telefone);
-        //        comando.Parameters.AddWithValue("@email", alunoPreenchido.Email);
-        //        comando.Parameters.AddWithValue("@serie", alunoPreenchido.Serie);
-        //        comando.ExecuteNonQuery();
-        //        //depois autualizo minha lista
-        //        listaAluno[index].NomeCompleto = alunoPreenchido.NomeCompleto;
-        //        listaAluno[index].Telefone = alunoPreenchido.Telefone;
-        //        listaAluno[index].Email = alunoPreenchido.Email;
-        //        listaAluno[index].Serie = alunoPreenchido.Serie;
-        //    }
+        public void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            try
+            {
+                conexao.Open();
+                comando.CommandText = "update aluno set " +
+                                               "nomeCompleto = @nomeCompleto, " +
+                                               "telefone = @telefone, " +
+                                               "email = @email, " +
+                                               "serie = @serie " +
+                                               "where id = @id";
+                comando.Parameters.AddWithValue("@id", aluno.Id);
+                comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
+                comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
+                comando.Parameters.AddWithValue("@email", aluno.Email);
+                comando.Parameters.AddWithValue("@serie", aluno.Serie);
+                comando.ExecuteNonQuery();
+                //depois autualizo minha lista
+                lista[index].NomeCompleto = aluno.NomeCompleto;
+                lista[index].Telefone = aluno.Telefone;
+                lista[index].Email = aluno.Email;
+                lista[index].Serie = aluno.Serie;
 
-        //    public void BuscaAluno()
-        //    {
-        //        //busco no banco de dados
-        //        listaAluno.Clear();
-        //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno " +
-        //                            "where nomeCompleto like @nomeCompleto ";
-        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-        //        comando.Parameters.AddWithValue("@nomeCompleto", "%" + alunoPreenchido.NomeCompleto + "%");
-        //        dr = comando.ExecuteReader();
+            }
+            catch 
+            {
 
-        //        //limpo minha lista e insiro somente a busca personalizada
-        //        while (dr.HasRows && dr.Read())
-        //        {
-        //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
-        //        }
-        //    }
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
+        }
 
-        //    public void BuscaTodosAlunos()
-        //    {
-        //        listaAluno.Clear();
-        //        conexao.Open();
-        //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno";
-        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-        //        dr = comando.ExecuteReader();
+        public void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            try
+            {
+                conexao.Open();
+                //busco no banco de dados
+                lista.Clear();
+                comando.CommandText = "select id, nomeCompleto, telefone, email, serie  from aluno " +
+                                    "where nomeCompleto like @nomeCompleto ";
+                comando = new NpgsqlCommand(instrucaoSQL, conexao);
+                comando.Parameters.AddWithValue("@nomeCompleto", "%" + aluno.NomeCompleto + "%");
+                dr = comando.ExecuteReader();
 
-        //        while (dr.HasRows && dr.Read())
-        //        {
+                //limpo minha lista e insiro somente a busca personalizada
+                while (dr.HasRows && dr.Read())
+                {
+                    lista.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
+                }
 
-        //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
-        //        }
-        //    }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
+        }
+
+        public void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            try
+            {
+                conexao.Open();
+                lista.Clear();
+                comando.CommandText = "select id, nomeCompleto, telefone, email, serie  from aluno";
+                dr = comando.ExecuteReader();
+
+                while (dr.HasRows && dr.Read())
+                {
+
+                    lista.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
+        }
     }
 }
