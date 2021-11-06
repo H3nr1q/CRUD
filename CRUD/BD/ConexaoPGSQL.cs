@@ -25,7 +25,6 @@ namespace CRUD.BD.Postgree
         {
             comando = new NpgsqlCommand(instrucaoSQL);
             lista = new List<Aluno>();
-            aluno = new Aluno();
             codMax = 1;
 
         }
