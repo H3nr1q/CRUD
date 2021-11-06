@@ -8,6 +8,7 @@ namespace CRUD.BD
     public interface IConexao
     {
         //public abstract void Conecta();
+
         //public abstract void Desonecta();
 
         public abstract void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista);

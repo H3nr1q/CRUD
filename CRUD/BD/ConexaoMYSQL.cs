@@ -1,88 +1,32 @@
-﻿using Npgsql;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace CRUD.BD.Postgree
+namespace CRUD.BD
 {
-    public class ConexaoPGSQL:IConexao
+    public class ConexaoMYSQL : IConexao
     {
-        private string strConexao = "Server=localhost; Database=WPFCRUD; Port=5432; User Id=postgres; Password=123";
-        private NpgsqlCommand comando;
-        private NpgsqlDataAdapter da;
-        private NpgsqlDataReader dr;
-        private NpgsqlConnection conexao;
-        
+        private string strConexao = "Server=localhost; Database=WPFCRUD; Port=5432; User Id=mysql; Password=123";
+        private MySqlCommand comando;
+        private MySqlDataAdapter da;
+        private MySqlDataReader dr;
+        private MySqlConnection conexao;
+
         public int codMax;
         public List<Aluno> lista;
         public Aluno aluno;
         public int index;
 
-        public ConexaoPGSQL()
+
+        public ConexaoMYSQL()
         {
-            comando = new NpgsqlCommand();
-            conexao = new NpgsqlConnection(strConexao);
+            comando = new MySqlCommand();
+            conexao = new MySqlConnection(strConexao);
             comando.Connection = conexao;
             lista = new List<Aluno>();
             codMax = 1;
-
-        }
-        
-
-
-        public void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
-        {
-            try
-            {
-                conexao.Open();
-                comando.CommandText = "insert into aluno(id, nomeCompleto, telefone, email, serie) values(@id, @nomeCompleto, @telefone, @email, @serie)";
-                comando.Parameters.AddWithValue("@id", codMax);
-                comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
-                comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
-                comando.Parameters.AddWithValue("@email", aluno.Email);
-                comando.Parameters.AddWithValue("@serie", aluno.Serie);
-                comando.ExecuteNonQuery();
-                //depois insiro na lista
-                lista.Add(new Aluno(codMax, aluno.NomeCompleto, aluno.Telefone, aluno.Email, aluno.Serie));
-                codMax++;
-
-            }
-            catch
-            {
-                throw;
-            }
-
-            finally
-            {
-                conexao.Close();
-            }
-            
-        }
-
-        public void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
-        {
-
-            try
-            {
-                //Primeiro removo do banco
-                conexao.Open();
-                comando.CommandText = "delete from aluno where id = @id";
-                comando.Parameters.AddWithValue("@id", aluno.Id);
-                comando.ExecuteNonQuery();
-                //removo da lista
-                lista.Remove(aluno);
-
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conexao.Close();
-            }
-           
         }
 
         public void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
@@ -109,7 +53,7 @@ namespace CRUD.BD.Postgree
                 lista[index].Serie = aluno.Serie;
 
             }
-            catch 
+            catch
             {
 
                 throw;
@@ -118,7 +62,6 @@ namespace CRUD.BD.Postgree
             {
                 conexao.Close();
             }
-            
         }
 
         public void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
@@ -148,7 +91,6 @@ namespace CRUD.BD.Postgree
             {
                 conexao.Close();
             }
-            
         }
 
         public void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista)
@@ -175,7 +117,57 @@ namespace CRUD.BD.Postgree
             {
                 conexao.Close();
             }
-            
+        }
+
+        public void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            try
+            {
+                //Primeiro removo do banco
+                conexao.Open();
+                comando.CommandText = "delete from aluno where id = @id";
+                comando.Parameters.AddWithValue("@id", aluno.Id);
+                comando.ExecuteNonQuery();
+                //removo da lista
+                lista.Remove(aluno);
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }
+
+        public void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            try
+            {
+                conexao.Open();
+                comando.CommandText = "insert into aluno(id, nomeCompleto, telefone, email, serie) values(@id, @nomeCompleto, @telefone, @email, @serie)";
+                comando.Parameters.AddWithValue("@id", codMax);
+                comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
+                comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
+                comando.Parameters.AddWithValue("@email", aluno.Email);
+                comando.Parameters.AddWithValue("@serie", aluno.Serie);
+                comando.ExecuteNonQuery();
+                //depois insiro na lista
+                lista.Add(new Aluno(codMax, aluno.NomeCompleto, aluno.Telefone, aluno.Email, aluno.Serie));
+                codMax++;
+
+            }
+            catch
+            {
+                throw;
+            }
+
+            finally
+            {
+                conexao.Close();
+            }
         }
     }
 }
