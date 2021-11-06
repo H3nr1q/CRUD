@@ -32,6 +32,8 @@ namespace CRUD
         public Escola()
         {
             Conexao.Con(new ConexaoPGSQL());
+            alunoPreenchido = new Aluno();
+            alunoSelecionado = new Aluno();
             MeusComandos();            
         }
 
@@ -67,7 +69,7 @@ namespace CRUD
                     if (alunoSelecionado != null) {
                         try
                         {
-                            //Conexao.ExcluirAluno(alunoSelecionado);
+                            Conexao.ExcluirAluno(alunoSelecionado, listaAluno);
                             Notifica();
                         }
                         catch (Exception ex)

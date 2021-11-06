@@ -12,7 +12,7 @@ namespace CRUD.BD.Postgree
         public NpgsqlCommand comando;
         public NpgsqlDataAdapter da;
         public NpgsqlDataReader dr;
-        private NpgsqlConnection conexao { get; set; }
+        private NpgsqlConnection conexao;
         
         public int codMax;
 
@@ -55,69 +55,68 @@ namespace CRUD.BD.Postgree
             lista.Add(new Aluno(codMax, aluno.NomeCompleto, aluno.Telefone, aluno.Email, aluno.Serie));
         }
 
-    //    public void ExcluirAluno()
-    //    {
-    //        //Primeiro removo do banco
-    //        instrucaoSQL = "delete from aluno where id = @id";
-    //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-    //        comando.Parameters.AddWithValue("@id", alunoSelecionado.Id);
-    //        comando.ExecuteNonQuery();
-    //        //removo da lista
-    //        listaAluno.Remove(alunoSelecionado);
-    //    }
+        public void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            //Primeiro removo do banco
+            instrucaoSQL = "delete from aluno where id = @id";
+            comando.Parameters.AddWithValue("@id", aluno.Id);
+            comando.ExecuteNonQuery();
+            //removo da lista
+            lista.Remove(aluno);
+        }
 
-    //    public void AtualizaAluno()
-    //    {
-    //        instrucaoSQL = "update aluno set " +
-    //                                       "nomeCompleto = @nomeCompleto, " +
-    //                                       "telefone = @telefone, " +
-    //                                       "email = @email, " +
-    //                                       "serie = @serie " +
-    //                                       "where id = @id";
-    //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-    //        comando.Parameters.AddWithValue("@id", alunoSelecionado.Id);
-    //        comando.Parameters.AddWithValue("@nomeCompleto", alunoPreenchido.NomeCompleto);
-    //        comando.Parameters.AddWithValue("@telefone", alunoPreenchido.Telefone);
-    //        comando.Parameters.AddWithValue("@email", alunoPreenchido.Email);
-    //        comando.Parameters.AddWithValue("@serie", alunoPreenchido.Serie);
-    //        comando.ExecuteNonQuery();
-    //        //depois autualizo minha lista
-    //        listaAluno[index].NomeCompleto = alunoPreenchido.NomeCompleto;
-    //        listaAluno[index].Telefone = alunoPreenchido.Telefone;
-    //        listaAluno[index].Email = alunoPreenchido.Email;
-    //        listaAluno[index].Serie = alunoPreenchido.Serie;
-    //    }
+        //    public void AtualizaAluno()
+        //    {
+        //        instrucaoSQL = "update aluno set " +
+        //                                       "nomeCompleto = @nomeCompleto, " +
+        //                                       "telefone = @telefone, " +
+        //                                       "email = @email, " +
+        //                                       "serie = @serie " +
+        //                                       "where id = @id";
+        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
+        //        comando.Parameters.AddWithValue("@id", alunoSelecionado.Id);
+        //        comando.Parameters.AddWithValue("@nomeCompleto", alunoPreenchido.NomeCompleto);
+        //        comando.Parameters.AddWithValue("@telefone", alunoPreenchido.Telefone);
+        //        comando.Parameters.AddWithValue("@email", alunoPreenchido.Email);
+        //        comando.Parameters.AddWithValue("@serie", alunoPreenchido.Serie);
+        //        comando.ExecuteNonQuery();
+        //        //depois autualizo minha lista
+        //        listaAluno[index].NomeCompleto = alunoPreenchido.NomeCompleto;
+        //        listaAluno[index].Telefone = alunoPreenchido.Telefone;
+        //        listaAluno[index].Email = alunoPreenchido.Email;
+        //        listaAluno[index].Serie = alunoPreenchido.Serie;
+        //    }
 
-    //    public void BuscaAluno()
-    //    {
-    //        //busco no banco de dados
-    //        listaAluno.Clear();
-    //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno " +
-    //                            "where nomeCompleto like @nomeCompleto ";
-    //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-    //        comando.Parameters.AddWithValue("@nomeCompleto", "%" + alunoPreenchido.NomeCompleto + "%");
-    //        dr = comando.ExecuteReader();
+        //    public void BuscaAluno()
+        //    {
+        //        //busco no banco de dados
+        //        listaAluno.Clear();
+        //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno " +
+        //                            "where nomeCompleto like @nomeCompleto ";
+        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
+        //        comando.Parameters.AddWithValue("@nomeCompleto", "%" + alunoPreenchido.NomeCompleto + "%");
+        //        dr = comando.ExecuteReader();
 
-    //        //limpo minha lista e insiro somente a busca personalizada
-    //        while (dr.HasRows && dr.Read())
-    //        {
-    //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
-    //        }
-    //    }
+        //        //limpo minha lista e insiro somente a busca personalizada
+        //        while (dr.HasRows && dr.Read())
+        //        {
+        //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
+        //        }
+        //    }
 
-    //    public void BuscaTodosAlunos()
-    //    {
-    //        listaAluno.Clear();
-    //        conexao.Open();
-    //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno";
-    //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
-    //        dr = comando.ExecuteReader();
+        //    public void BuscaTodosAlunos()
+        //    {
+        //        listaAluno.Clear();
+        //        conexao.Open();
+        //        instrucaoSQL = "select id, nomeCompleto, telefone, email, serie  from aluno";
+        //        comando = new NpgsqlCommand(instrucaoSQL, conexao);
+        //        dr = comando.ExecuteReader();
 
-    //        while (dr.HasRows && dr.Read())
-    //        {
+        //        while (dr.HasRows && dr.Read())
+        //        {
 
-    //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
-    //        }
-    //    }
+        //            listaAluno.Add(new Aluno(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4)));
+        //        }
+        //    }
     }
 }

@@ -25,15 +25,10 @@ namespace CRUD.BD
             conn.InserirAluno(aluno, lista);
         }
 
-        //public static void InserirAluno(Aluno alunoPreenchido)
-        //{
-        //    InserirAluno(alunoPreenchido);
-        //}
-
-        //public static void ExcluirAluno(Aluno alunoSelecionado)
-        //{
-        //    ExcluirAluno(alunoSelecionado);
-        //}
+        public static void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        {
+            conn.ExcluirAluno(aluno, lista);
+        }
 
         //public static void AtualizaAluno(Aluno alunoSelecionado)
         //{

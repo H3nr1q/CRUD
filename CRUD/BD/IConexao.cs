@@ -12,7 +12,7 @@ namespace CRUD.BD
 
         public abstract void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
 
-        //public abstract void ExcluirAluno();
+        public abstract void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
 
         //public abstract void AtualizaAluno();
 
