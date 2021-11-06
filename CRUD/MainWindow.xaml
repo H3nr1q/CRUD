@@ -1,0 +1,57 @@
+﻿<Window x:Class="CRUD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CRUD"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="676" x:Name="WindowAlunos">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid DataContext="{Binding alunoPreenchido}" Height="434" VerticalAlignment="Center">
+            <TextBox x:Name="txtNome" HorizontalAlignment="Left" Margin="33,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="468" AutomationProperties.Name="Nome" Text="{Binding NomeCompleto}"/>
+            <ComboBox x:Name="cbSerie"  HorizontalAlignment="Left" Margin="520,41,0,0" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Serie}" SelectedIndex="{Binding SerieIndex}">
+                <ListBoxItem Content="..."/>
+                <ListBoxItem Content="PrimeiraSerie"/>
+                <ListBoxItem Content="SegundaSerie"/>
+                <ListBoxItem Content="TerceiraSerie"/>
+                <ListBoxItem Content="QuartaSerie"/>
+                <ListBoxItem Content="QuintaSerie"/>
+                <ListBoxItem Content="SextaSerie"/>
+                <ListBoxItem Content="SetimaSerie"/>
+                <ListBoxItem Content="OitavaSerie"/>
+                <ListBoxItem Content="PrimeiroAnoMedio"/>
+                <ListBoxItem Content="SegundoAnoMedio"/>
+                <ListBoxItem Content="TerceiroAnoMedio"/>
+            </ComboBox>
+            <TextBox x:Name="txtTelefone" HorizontalAlignment="Left" Margin="33,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" AutomationProperties.Name="Nome" Text="{Binding Telefone}"/>
+            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="254,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="386" AutomationProperties.Name="Nome" Text="{Binding Email}"/>
+
+        </Grid>
+        <Label x:Name="Nome" Content="Nome&#xD;&#xA;" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top" Height="42" Width="43"/>
+        <Label Content="Serie&#xD;&#xA;" HorizontalAlignment="Left" Margin="523,11,0,0" VerticalAlignment="Top" Height="42" Width="36"/>
+        <Label x:Name="Nome_Copy" Content="Telefone" HorizontalAlignment="Left" Margin="33,61,0,0" VerticalAlignment="Top" Height="42" Width="97"/>
+        <Label x:Name="Nome_Copy1" Content="Email" HorizontalAlignment="Left" Margin="256,61,0,0" VerticalAlignment="Top" Height="42" Width="43"/>
+        <Button x:Name="btInserir" Content="Inserir" HorizontalAlignment="Left" Margin="33,122,0,0" VerticalAlignment="Top" Command="{Binding Inserir}" Width="80" Height="20"/>
+        <Button x:Name="btAlterar" Content="Alterar" HorizontalAlignment="Left" Margin="118,122,0,0" VerticalAlignment="Top" Width="80" Height="20" Command="{Binding Alterar}"/>
+        <Button x:Name="btExcluir" Content="Excluir" Margin="204,122,388,0" VerticalAlignment="Top" Command="{Binding Excluir}" Height="20"/>
+        <ListView Margin="0,174,0,23" HorizontalAlignment="Center" Width="632" x:Name="lvAlunos" ItemsSource="{Binding listaAluno}" SelectedItem="{Binding alunoSelecionado}"  SelectedIndex="{Binding index}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="30"/>
+                    <GridViewColumn Header="Nome Aluno" DisplayMemberBinding="{Binding NomeCompleto}" Width="200"/>
+                    <GridViewColumn Header="Telefone" DisplayMemberBinding="{Binding Telefone}" Width="100"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="200"/>
+                    <GridViewColumn Header="Serie" DisplayMemberBinding="{Binding Serie}" Width="300"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btFiltrar" Content="Buscar" Margin="570,125,22,0" VerticalAlignment="Top" Command="{Binding Filtrar}" Height="20"/>
+
+
+
+
+    </Grid>
+</Window>
