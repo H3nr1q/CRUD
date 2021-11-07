@@ -17,7 +17,7 @@ namespace CRUD.BD
         public int codMax;
         public List<Aluno> lista;
         public Aluno aluno;
-        public int index;
+        //public int index;
 
 
         public ConexaoMYSQL()
@@ -29,7 +29,7 @@ namespace CRUD.BD
             codMax = 1;
         }
 
-        public void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        public void AtualizaAluno(int id, Aluno aluno, ObservableCollection<Aluno> lista, int index)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace CRUD.BD
                                                "email = @email, " +
                                                "serie = @serie " +
                                                "where id = @id";
-                comando.Parameters.AddWithValue("@id", aluno.Id);
+                comando.Parameters.AddWithValue("@id", id);
                 comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
                 comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
                 comando.Parameters.AddWithValue("@email", aluno.Email);

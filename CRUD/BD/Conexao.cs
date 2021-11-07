@@ -30,9 +30,9 @@ namespace CRUD.BD
             conn.ExcluirAluno(aluno, lista);
         }
 
-        public static void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
+        public static void AtualizaAluno(int id, Aluno aluno, ObservableCollection<Aluno> lista, int index)
         {
-            conn.AtualizaAluno(aluno, lista);
+            conn.AtualizaAluno(id, aluno, lista, index);
         }
 
         public static void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
