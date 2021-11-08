@@ -87,7 +87,7 @@ namespace CRUD.BD.Postgree
            
         }
 
-        public void AtualizaAluno(int id, Aluno aluno, ObservableCollection<Aluno> lista, int index)
+        public void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista, int index)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace CRUD.BD.Postgree
                                                "email = @email, " +
                                                "serie = @serie " +
                                                "where id = @id";
-                comando.Parameters.AddWithValue("@id", id);
+                comando.Parameters.AddWithValue("@id", aluno.Id);
                 comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
                 comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
                 comando.Parameters.AddWithValue("@email", aluno.Email);

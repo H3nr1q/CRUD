@@ -7,21 +7,13 @@ namespace CRUD.BD
 {
     public interface IConexao
     {
-        //public abstract void Conecta();
 
-        //public abstract void Desonecta();
+        void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
 
-        public abstract void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
-
-        public abstract void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
-        public abstract void AtualizaAluno(int id, Aluno aluno, ObservableCollection<Aluno> lista, int index);
-        public abstract void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista);
-        public abstract void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista);
+        void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
+        void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista, int index);
+        void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista);
+        void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista);
          
-        //public abstract void AtualizaAluno();
-
-        //public abstract void BuscaAluno();
-
-        //public abstract void BuscaTodosAlunos();
     }
 }

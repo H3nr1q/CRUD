@@ -28,7 +28,7 @@ namespace CRUD
         public Aluno alunoSelecionado { get; set; }
         public Aluno alunoPreenchido { get; set; }
         public int index { get; set; }
-        public ConexaoPGSQL conexao;
+        public IConexao conexao;
 
         public Escola()
         {
@@ -95,7 +95,8 @@ namespace CRUD
                        try
                        {
                            //atualizo banco de dados primeiro
-                           conexao.AtualizaAluno(alunoSelecionado.Id, alunoPreenchido, listaAluno, index);
+                           alunoPreenchido.Id = alunoSelecionado.Id;
+                           conexao.AtualizaAluno(alunoPreenchido, listaAluno, index);
                            limpaCampos();
                            Notifica();
                        }
