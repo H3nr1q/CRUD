@@ -86,8 +86,7 @@ namespace CRUD.BD.Postgree
             }
            
         }
-
-        public void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista, int index)
+        public void AtualizaAluno(Aluno alunoNovo, Aluno alunoAntigo)
         {
             try
             {
@@ -98,17 +97,16 @@ namespace CRUD.BD.Postgree
                                                "email = @email, " +
                                                "serie = @serie " +
                                                "where id = @id";
-                comando.Parameters.AddWithValue("@id", aluno.Id);
-                comando.Parameters.AddWithValue("@nomeCompleto", aluno.NomeCompleto);
-                comando.Parameters.AddWithValue("@telefone", aluno.Telefone);
-                comando.Parameters.AddWithValue("@email", aluno.Email);
-                comando.Parameters.AddWithValue("@serie", aluno.Serie);
+                comando.Parameters.AddWithValue("@id", alunoNovo.Id);
+                comando.Parameters.AddWithValue("@nomeCompleto", alunoNovo.NomeCompleto);
+                comando.Parameters.AddWithValue("@telefone", alunoNovo.Telefone);
+                comando.Parameters.AddWithValue("@email", alunoNovo.Email);
+                comando.Parameters.AddWithValue("@serie", alunoNovo.Serie);
                 comando.ExecuteNonQuery();
-                //depois autualizo minha lista
-                lista[index].NomeCompleto = aluno.NomeCompleto;
-                lista[index].Telefone = aluno.Telefone;
-                lista[index].Email = aluno.Email;
-                lista[index].Serie = aluno.Serie;
+                alunoAntigo.NomeCompleto = alunoNovo.NomeCompleto;
+                alunoAntigo.Telefone = alunoNovo.Telefone;
+                alunoAntigo.Email = alunoNovo.Email;
+                alunoAntigo.Serie = alunoNovo.Serie;
 
             }
             catch 

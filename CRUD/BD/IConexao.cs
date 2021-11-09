@@ -11,7 +11,7 @@ namespace CRUD.BD
         void InserirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
 
         void ExcluirAluno(Aluno aluno, ObservableCollection<Aluno> lista);
-        void AtualizaAluno(Aluno aluno, ObservableCollection<Aluno> lista, int index);
+        void AtualizaAluno(Aluno alunoNovo, Aluno alunoAntigo);
         void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista);
         void BuscaTodosAlunos(Aluno aluno, ObservableCollection<Aluno> lista);
          

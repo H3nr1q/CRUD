@@ -94,9 +94,8 @@ namespace CRUD
                    {
                        try
                        {
-                           //atualizo banco de dados primeiro
                            alunoPreenchido.Id = alunoSelecionado.Id;
-                           conexao.AtualizaAluno(alunoPreenchido, listaAluno, index);
+                           conexao.AtualizaAluno(alunoPreenchido, alunoSelecionado);
                            limpaCampos();
                            Notifica();
                        }

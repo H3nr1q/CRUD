@@ -20,6 +20,11 @@ namespace CRUD.BD
             throw new NotImplementedException();
         }
 
+        public void AtualizaAluno(Aluno alunoNovo, Aluno alunoAntigo)
+        {
+            throw new NotImplementedException();
+        }
+
         public void BuscaAluno(Aluno aluno, ObservableCollection<Aluno> lista)
         {
             throw new NotImplementedException();
